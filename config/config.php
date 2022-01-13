@@ -6,9 +6,12 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symplify\PackageBuilder\Strings\StringFormatConverter;
+use Symplify\SimplePhpDocParser\ValueObject\SimplePhpDocParserConfig;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
+
+    $containerConfigurator->import(SimplePhpDocParserConfig::FILE_PATH);
 
     $services->defaults()
         ->public()
