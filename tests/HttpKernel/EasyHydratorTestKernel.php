@@ -10,21 +10,13 @@ use Symplify\EasyHydrator\EasyHydratorBundle;
 use Symplify\SimplePhpDocParser\Bundle\SimplePhpDocParserBundle;
 use Symplify\SymplifyKernel\Bundle\SymplifyKernelBundle;
 use Symplify\SymplifyKernel\HttpKernel\AbstractSymplifyKernel;
+use Psr\Container\ContainerInterface;
 
 final class EasyHydratorTestKernel extends AbstractSymplifyKernel
 {
-    public function registerContainerConfiguration(LoaderInterface $loader): void
+    public function createFromConfigs(array $configFiles): ContainerInterface
     {
-        $loader->load(__DIR__ . '/../config.php');
-
-        parent::registerContainerConfiguration($loader);
-    }
-
-    /**
-     * @return BundleInterface[]
-     */
-    public function registerBundles(): iterable
-    {
-        return [new EasyHydratorBundle(), new SymplifyKernelBundle(), new SimplePhpDocParserBundle()];
+        $configFiles[] = __DIR__.'/../config.php';
+        return $this->create([], [], $configFiles);
     }
 }
